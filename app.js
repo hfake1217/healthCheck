@@ -47,6 +47,25 @@ app.post("/register", (req, res) => {
     });
 });
 
+app.post("/login", (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    User.findOne({ email: username })
+        .then((foundUser) => {
+            if (foundUser) {
+                if (foundUser.password === password) {
+                    res.render("dashboard");
+                }
+            }
+        })
+
+        .catch((err) => {
+            console.log(err);
+        });
+});
+
+
 
 app.listen(3000, function() {
     console.log("Server is running on port 3000.");
